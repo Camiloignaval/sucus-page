@@ -1,4 +1,3 @@
-import React from "react";
 import { Size } from "../../interfaces/product";
 import { Chip } from "@mui/material";
 
