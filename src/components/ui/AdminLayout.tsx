@@ -75,9 +75,7 @@ export const MainLayout = () => {
       <Box className="contenedorBkg">
         <img className="imgLateral" src={lateralSucus} alt="Imagen Lateral" />
       </Box>
-      <Box sx={{ m: 5 }}>
-        <Outlet />
-      </Box>
+      <Outlet />
     </ThemeProvider>
   );
 };

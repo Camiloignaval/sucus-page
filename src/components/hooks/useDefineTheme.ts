@@ -7,6 +7,13 @@ export const useDefineTheme = () => {
   const theme = createTheme({
     palette: {
       mode: themeMode,
+      primary: {
+        main: themeMode !== "dark" ? "#202124" : "#f6f5ef", // Color principal en modo claro
+      },
+      background: {
+        default: themeMode === "dark" ? "#202124" : "#f6f5ef", // Color de fondo predeterminado
+        // paper: '#ffffff',   // Color de fondo para los elementos de papel, como tarjetas
+      },
     },
   });
 

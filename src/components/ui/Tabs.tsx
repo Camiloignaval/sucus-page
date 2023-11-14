@@ -3,6 +3,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { categoryData } from "../../data/categorysData";
+import { ProductList } from "../pages/ProductList";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -30,12 +32,12 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
+// function a11yProps(index: number) {
+//   return {
+//     id: `simple-tab-${index}`,
+//     "aria-controls": `simple-tabpanel-${index}`,
+//   };
+// }
 
 export default function BasicTabs() {
   const [value, setValue] = React.useState(0);
@@ -52,13 +54,16 @@ export default function BasicTabs() {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          {
+            // <Tab label="Item One" {...a11yProps(0)} />
+            categoryData.map((category) => (
+              <Tab key={category.id} label={category.name} />
+            ))
+          }
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Item One
+        <ProductList />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         Item Two

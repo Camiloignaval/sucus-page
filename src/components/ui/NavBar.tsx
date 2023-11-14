@@ -12,8 +12,13 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import HomeIcon from "@mui/icons-material/Home";
+import EmailIcon from "@mui/icons-material/Email";
+import Person2Icon from "@mui/icons-material/Person2";
+
+import { motion } from "framer-motion";
+import CartPopUp from "../pages/Cart/CartPopUp";
 
 interface Props {
   window?: () => Window;
@@ -21,9 +26,13 @@ interface Props {
 
 const drawerWidth = 240;
 const navItems = [
-  { name: "Home", url: "/" },
-  { name: "About Us", url: "/about-us" },
-  { name: "Contact", url: "/contact" },
+  { name: "Home", url: "/", icon: <HomeIcon sx={{ mr: 0.1 }} /> },
+  {
+    name: "About Us",
+    url: "/about-us",
+    icon: <Person2Icon sx={{ mr: 0.1 }} />,
+  },
+  { name: "Contact", url: "/contact", icon: <EmailIcon sx={{ mr: 0.1 }} /> },
 ];
 
 export default function DrawerAppBar(props: Props) {
@@ -71,13 +80,36 @@ export default function DrawerAppBar(props: Props) {
           </IconButton>
 
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          <Box
+            className="navItems"
+            sx={{
+              display: {
+                xs: "none",
+                sm: "flex",
+              },
+            }}
+          >
             {navItems.map((item) => (
-              <Button key={item.name} /*  sx={{ color: "#fff" }} */>
-                <Link to={`contacts/1`}>{item.name}</Link>
-              </Button>
+              <motion.div key={item.name} whileTap={{ scale: 0.5 }}>
+                <NavLink
+                  className={({ isActive, isPending }) =>
+                    isActive
+                      ? "navItem active"
+                      : isPending
+                      ? "navItem pending"
+                      : "navItem"
+                  }
+                  to={item.url}
+                >
+                  {item.icon}
+                  {item.name}
+                </NavLink>
+              </motion.div>
             ))}
           </Box>
+          <motion.div whileTap={{ scale: 0.8 }}>
+            <CartPopUp />
+          </motion.div>
         </Toolbar>
       </AppBar>
       <nav>
