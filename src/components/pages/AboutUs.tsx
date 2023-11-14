@@ -1,4 +1,3 @@
-import React from "react";
 import { MainLayout } from "../ui/MainLayout";
 import { Typography } from "@mui/material";
 
