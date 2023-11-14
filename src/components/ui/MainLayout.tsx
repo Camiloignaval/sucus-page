@@ -1,4 +1,4 @@
-import principalImage from "../../assets/banner fondo verder.jpg";
+import principalImage from "../../assets/banner_fondo_verde.jpg";
 import principalImage2 from "../../assets/banner01.jpg";
 import lateralSucus from "../../assets/sucus_lateral.png";
 import "../../App.css";
