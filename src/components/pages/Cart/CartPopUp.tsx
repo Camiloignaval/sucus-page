@@ -61,7 +61,7 @@ export default function CartPopUp() {
             color: "#fff",
           }}
         >
-          <StyledBadge badgeContent={2} color="secondary">
+          <StyledBadge badgeContent={2}>
             <ShoppingCartIcon />
           </StyledBadge>
         </IconButton>
@@ -85,10 +85,12 @@ export default function CartPopUp() {
         </ul>
         <Divider />
 
-        <Box sx={{ display: "flex", justifyContent: "end", m: 1, mt: 2 }}>
+        <Box
+          sx={{ display: "flex", justifyContent: "end", m: 1, mr: 2, mt: 2 }}
+        >
           <Button
             variant="contained"
-            color="secondary"
+            color="success"
             onClick={() => navigate("/cart")}
           >
             Ir a pagar

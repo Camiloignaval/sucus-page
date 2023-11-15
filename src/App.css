@@ -128,5 +128,37 @@ html {
   align-items: center;
   gap: 30px;
   flex-wrap: wrap;
+
   /* margin-top: 100px;  */
+}
+
+.cardContentList {
+  width: 100%;
+  display: flex;
+  position: relative;
+  background-color: transparent !important;
+  backdrop-filter: blur(5px);
+  border-radius: 20px !important;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.cardItem {
+  transition: all 0.3s ease !important;
+  /* box-shadow: 1px 0px 10px 2px rgba(0, 0, 0, 0.25) !important; */
+  position: relative !important;
+  width: 300px;
+}
+
+.cardItem:hover {
+  transform: scale(1.05);
+  z-index: 99 !important;
+}
+
+.bla {
+  padding: 0 !important;
 }

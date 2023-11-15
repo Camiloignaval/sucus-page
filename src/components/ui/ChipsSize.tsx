@@ -14,5 +14,5 @@ interface Props {
 }
 
 export const ChipsSize = ({ size: sizeValue }: Props) => (
-  <Chip label={chipSizes[sizeValue]} variant={"filled"} />
+  <Chip label={chipSizes[sizeValue]} size="small" variant={"filled"} />
 );

@@ -12,7 +12,7 @@ export const useDefineTheme = () => {
       },
       background: {
         default: themeMode === "dark" ? "#202124" : "#f6f5ef", // Color de fondo predeterminado
-        // paper: '#ffffff',   // Color de fondo para los elementos de papel, como tarjetas
+        paper: themeMode === "dark" ? "#191a1c" : "#f6f5ef", // Color de fondo para los elementos de papel, como tarjetas
       },
     },
   });
