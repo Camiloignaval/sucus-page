@@ -61,7 +61,7 @@ export default function CartPopUp() {
             color: "#fff",
           }}
         >
-          <StyledBadge badgeContent={2}>
+          <StyledBadge badgeContent={2} color={"secondary"}>
             <ShoppingCartIcon />
           </StyledBadge>
         </IconButton>

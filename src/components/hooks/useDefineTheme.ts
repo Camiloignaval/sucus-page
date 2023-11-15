@@ -10,6 +10,9 @@ export const useDefineTheme = () => {
       primary: {
         main: themeMode !== "dark" ? "#202124" : "#f6f5ef", // Color principal en modo claro
       },
+      secondary: {
+        main: themeMode !== "dark" ? "#274e13" : "#294e16", // Color principal en modo claro
+      },
       background: {
         default: themeMode === "dark" ? "#202124" : "#f6f5ef", // Color de fondo predeterminado
         paper: themeMode === "dark" ? "#191a1c" : "#f6f5ef", // Color de fondo para los elementos de papel, como tarjetas
