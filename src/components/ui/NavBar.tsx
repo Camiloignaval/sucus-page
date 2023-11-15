@@ -7,8 +7,6 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -46,15 +44,29 @@ export default function DrawerAppBar(props: Props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        SUCULLENTAS
+        SUCULENTAS
       </Typography>
       <Divider />
       <List>
         {navItems.map((item) => (
-          <ListItem key={item.name} disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary={item.name} />
-            </ListItemButton>
+          <ListItem
+            sx={{ justifyContent: "center" }}
+            key={item.name}
+            disablePadding
+          >
+            <NavLink
+              className={({ isActive, isPending }) =>
+                isActive
+                  ? "navItem active"
+                  : isPending
+                  ? "navItem pending"
+                  : "navItem"
+              }
+              to={item.url}
+            >
+              {item.icon}
+              {item.name}
+            </NavLink>
           </ListItem>
         ))}
       </List>
@@ -107,9 +119,7 @@ export default function DrawerAppBar(props: Props) {
               </motion.div>
             ))}
           </Box>
-          <motion.div whileTap={{ scale: 0.8 }}>
-            <CartPopUp />
-          </motion.div>
+          <CartPopUp />
         </Toolbar>
       </AppBar>
       <nav>

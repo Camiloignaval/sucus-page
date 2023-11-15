@@ -1,3 +1,9 @@
 .cartPopUp {
   display: "block" !important;
 }
+.cartIconButton {
+  transition: all 0.3s ease !important;
+}
+.cartIconButton:hover {
+  transform: scale(1.1);
+}

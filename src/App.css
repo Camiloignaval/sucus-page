@@ -53,7 +53,6 @@ html {
   top: 0;
   right: 0;
   position: fixed;
-  /* z-index: -1; */
 }
 .imgLateral {
   max-width: 100vw;
@@ -80,9 +79,6 @@ html {
   box-sizing: content-box;
 }
 
-/* .navItems {
-  display: flex !important;
-} */
 .navItem {
   margin-right: 15px;
   display: flex;
@@ -113,7 +109,7 @@ html {
 
 .modeButton {
   z-index: 10000 !important;
-  position: absolute !important;
+  position: fixed !important;
   width: 50px;
   height: 60px;
   top: 3px;
@@ -121,7 +117,6 @@ html {
 }
 
 @media (min-width: 600px) {
-  /* Ajusta el valor de 600px según tus necesidades */
   .modeButton {
     left: 0; /* o right: 0; según tus necesidades */
   }
@@ -135,7 +130,3 @@ html {
   flex-wrap: wrap;
   /* margin-top: 100px;  */
 }
-
-/* .MuiRating-icon {
-  color: red;
-} */

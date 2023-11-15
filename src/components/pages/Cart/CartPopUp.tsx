@@ -13,6 +13,7 @@ import {
 import "./cart.css";
 import { useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { motion } from "framer-motion";
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -39,24 +40,32 @@ export default function CartPopUp() {
     <Box
       sx={{
         position: {
-          xs: "absolute",
+          xs: "relative",
           sm: "inherit",
         },
-        right: 80,
-        top: 8,
+        right: {
+          xs: 75,
+          sm: 0,
+        },
+        top: 0,
       }}
     >
-      <IconButton
-        aria-controls={open ? "basic-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
-        sx={{ color: "#fff" }}
-      >
-        <StyledBadge badgeContent={2} color="secondary">
-          <ShoppingCartIcon />
-        </StyledBadge>
-      </IconButton>
+      <motion.div whileTap={{ scale: 0.8 }}>
+        <IconButton
+          className="cartIconButton"
+          aria-controls={open ? "basic-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+          onClick={handleClick}
+          sx={{
+            color: "#fff",
+          }}
+        >
+          <StyledBadge badgeContent={2} color="secondary">
+            <ShoppingCartIcon />
+          </StyledBadge>
+        </IconButton>
+      </motion.div>
       <Menu
         id="basic-menu-cart"
         anchorEl={anchorEl}
