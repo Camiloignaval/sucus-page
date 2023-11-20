@@ -113,7 +113,7 @@ html {
   width: 50px;
   height: 60px;
   top: 3px;
-  right: 0;
+  right: 50px;
 }
 
 @media (min-width: 600px) {
@@ -157,8 +157,4 @@ html {
 .cardItem:hover {
   transform: scale(1.05);
   z-index: 99 !important;
-}
-
-.bla {
-  padding: 0 !important;
 }

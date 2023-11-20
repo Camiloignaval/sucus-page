@@ -11,7 +11,7 @@ export const useDefineTheme = () => {
         main: themeMode !== "dark" ? "#202124" : "#f6f5ef", // Color principal en modo claro
       },
       secondary: {
-        main: themeMode !== "dark" ? "#274e13" : "#294e16", // Color principal en modo claro
+        main: themeMode !== "dark" ? "#000" : "#000", // Color principal en modo claro
       },
       background: {
         default: themeMode === "dark" ? "#202124" : "#f6f5ef", // Color de fondo predeterminado

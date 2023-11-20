@@ -1,11 +1,12 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
 import {
   Badge,
   BadgeProps,
   Box,
+  Card,
   Divider,
+  Grid,
   IconButton,
   Typography,
   styled,
@@ -14,6 +15,10 @@ import "./cart.css";
 import { useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { motion } from "framer-motion";
+import { useCartStore } from "../../../store/cartStore";
+import { ItemCounter } from "../../ui/ItemCounter";
+import CancelIcon from "@mui/icons-material/Cancel";
+import { milesSeparator } from "../../../helpers/formatNumber";
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -25,16 +30,22 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
 }));
 
 export default function CartPopUp() {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
+  const [open, setOpen] = React.useState<boolean>(false);
 
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+  // const open = Boolean(anchorEl);
+  const handleClick = () => {
+    setOpen(!open);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleClose = () => setOpen(false);
+
+  const {
+    getTotalQuantity,
+    items,
+    addToCart,
+    removeOneFromCart,
+    removeAllFromCart,
+  } = useCartStore();
 
   return (
     <Box
@@ -44,7 +55,7 @@ export default function CartPopUp() {
           sm: "inherit",
         },
         right: {
-          xs: 75,
+          xs: 5,
           sm: 0,
         },
         top: 0,
@@ -53,50 +64,125 @@ export default function CartPopUp() {
       <motion.div whileTap={{ scale: 0.8 }}>
         <IconButton
           className="cartIconButton"
-          aria-controls={open ? "basic-menu" : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
           onClick={handleClick}
           sx={{
             color: "#fff",
           }}
         >
-          <StyledBadge badgeContent={2} color={"secondary"}>
+          <StyledBadge badgeContent={getTotalQuantity()} color={"secondary"}>
             <ShoppingCartIcon />
           </StyledBadge>
         </IconButton>
       </motion.div>
-      <Menu
-        id="basic-menu-cart"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-      >
-        <Typography sx={{ marginX: 5, marginY: 2 }}>
-          Productos en carrito
-        </Typography>
-        <Divider />
-        <ul>
-          <li>sucu 1</li>
-          <li>sucu 2</li>
-        </ul>
-        <Divider />
-
-        <Box
-          sx={{ display: "flex", justifyContent: "end", m: 1, mr: 2, mt: 2 }}
-        >
-          <Button
-            variant="contained"
-            color="success"
-            onClick={() => navigate("/cart")}
+      {open && (
+        <Card sx={{ position: "absolute", right: 2, minWidth: 300 }}>
+          <Typography sx={{ marginX: 5, marginY: 2 }}>
+            Productos en carrito
+          </Typography>
+          <IconButton
+            onClick={() => handleClose()}
+            sx={{ position: "absolute", top: 8, right: 5 }}
           >
-            Ir a pagar
-          </Button>
-        </Box>
-      </Menu>
+            <CancelIcon />
+          </IconButton>
+          <Divider />
+          <Grid justifyContent={"center"} container columnGap={3} p={2}>
+            {items.length === 0 && (
+              <>
+                <Typography variant="caption" sx={{ marginX: 5, marginY: 2 }}>
+                  No hay productos en el carrito
+                  {/* <SentimentVeryDissatisfiedIcon /> */}
+                </Typography>
+                <img src="./src/assets/sucutriste.png" alt="Suculenta triste" />
+              </>
+            )}
+            {items.map((item) => (
+              <Grid
+                item
+                container
+                xs={12}
+                key={item.id}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Grid item xs={4}>
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    style={{ maxWidth: "60px" }}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography variant="body2">{item.name}</Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <ItemCounter
+                    currentValue={item.quantity}
+                    addQuantity={() =>
+                      addToCart({
+                        id: item.id,
+                        name: item.name,
+                        price: item.price,
+                        quantity: item.quantity,
+                        image: item.image,
+                        inStock: item.inStock,
+                      })
+                    }
+                    removeQuantity={() => {
+                      item.quantity > 1
+                        ? removeOneFromCart(item.id)
+                        : removeAllFromCart(item.id);
+                    }}
+                    // isPossibleZero={item.quantity <= 1}
+                    maxValue={item.inStock}
+                  />
+                </Grid>
+              </Grid>
+            ))}
+          </Grid>
+          <Divider />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              ml: 3,
+              mr: 2,
+              mt: 1,
+            }}
+          >
+            <Typography fontWeight={"bold"} variant="body1">
+              Total
+            </Typography>
+            <Typography fontWeight={"bold"} variant="body1">
+              $
+              {milesSeparator({
+                num: items.reduce(
+                  (acc, item) => acc + item.price * item.quantity,
+                  0
+                ),
+              })}
+            </Typography>
+          </Box>
+          <Divider />
+
+          <Box
+            sx={{ display: "flex", justifyContent: "end", m: 3, mr: 2, mt: 2 }}
+          >
+            <Button
+              disabled={items.length === 0}
+              variant="contained"
+              color="success"
+              fullWidth
+              onClick={() => navigate("/cart")}
+            >
+              Ir a pagar
+            </Button>
+          </Box>
+        </Card>
+      )}
     </Box>
   );
 }

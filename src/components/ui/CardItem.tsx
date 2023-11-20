@@ -7,6 +7,7 @@ import { Box, Divider, Grid, IconButton, Rating } from "@mui/material";
 import { Product } from "../../interfaces/product";
 import { ChipsSize } from "./ChipsSize";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { useCartStore } from "../../store/cartStore";
 
 interface Props {
   product: Product;
@@ -20,6 +21,7 @@ export const CardItem = ({ product }: Props) => {
       ? ""
       : "#6e0000";
 
+  const { addToCart, items } = useCartStore();
   return (
     <Box className="itemAos" data-aos="fade-up">
       <Card>
@@ -63,12 +65,33 @@ export const CardItem = ({ product }: Props) => {
                 sx={{ color: colorRating }}
               />
             </Grid>
+            <Grid item xs={12} justifySelf={"end"}>
+              <Typography variant="caption" sx={{ opacity: 0.5 }}>
+                {product.inStock} en stock
+              </Typography>
+            </Grid>
           </Grid>
         </CardContent>
         <Divider />
 
         <CardActions sx={{ justifyContent: "end" }}>
-          <IconButton>
+          <IconButton
+            disabled={
+              product.inStock === 0 ||
+              items.find((item) => item.id === product.id)?.quantity ===
+                product.inStock
+            }
+            onClick={() =>
+              addToCart({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                quantity: 1,
+                image: product.image,
+                inStock: product.inStock,
+              })
+            }
+          >
             <AddShoppingCartIcon />
           </IconButton>
         </CardActions>
