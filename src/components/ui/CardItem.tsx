@@ -8,6 +8,7 @@ import { Product } from "../../interfaces/product";
 import { ChipsSize } from "./ChipsSize";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useCartStore } from "../../store/cartStore";
+import { useUiStore } from "../../store/uiStore";
 
 interface Props {
   product: Product;
@@ -22,6 +23,8 @@ export const CardItem = ({ product }: Props) => {
       : "#6e0000";
 
   const { addToCart, items } = useCartStore();
+
+  const { openDetailCart } = useUiStore();
   return (
     <Box className="itemAos" data-aos="fade-up">
       <Card>
@@ -65,8 +68,8 @@ export const CardItem = ({ product }: Props) => {
                 sx={{ color: colorRating }}
               />
             </Grid>
-            <Grid item xs={12} justifySelf={"end"}>
-              <Typography variant="caption" sx={{ opacity: 0.5 }}>
+            <Grid item xs={12} display={"flex"} justifyContent={"end"}>
+              <Typography variant="caption" sx={{ opacity: 0.5, mr: 2.5 }}>
                 {product.inStock} en stock
               </Typography>
             </Grid>
@@ -81,7 +84,10 @@ export const CardItem = ({ product }: Props) => {
               items.find((item) => item.id === product.id)?.quantity ===
                 product.inStock
             }
-            onClick={() =>
+            onClick={() => {
+              if (!items.some((item) => item.id === product.id)) {
+                openDetailCart();
+              }
               addToCart({
                 id: product.id,
                 name: product.name,
@@ -89,8 +95,8 @@ export const CardItem = ({ product }: Props) => {
                 quantity: 1,
                 image: product.image,
                 inStock: product.inStock,
-              })
-            }
+              });
+            }}
           >
             <AddShoppingCartIcon />
           </IconButton>
