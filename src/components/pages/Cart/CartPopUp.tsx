@@ -19,6 +19,7 @@ import { useCartStore } from "../../../store/cartStore";
 import { ItemCounter } from "../../ui/ItemCounter";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { milesSeparator } from "../../../helpers/formatNumber";
+import sucuTriste from "../../../assets/sucutriste.png";
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -93,7 +94,7 @@ export default function CartPopUp() {
                   No hay productos en el carrito
                   {/* <SentimentVeryDissatisfiedIcon /> */}
                 </Typography>
-                <img src="./src/assets/sucutriste.png" alt="Suculenta triste" />
+                <img src={sucuTriste} alt="Suculenta triste" />
               </>
             )}
             {items.map((item) => (
