@@ -9,7 +9,7 @@ interface IAction {
 interface IShowEnqueueSnackbar {
   isAction: boolean;
   text: string;
-  functionToExecute: () => void;
+  functionToExecute?: () => void | undefined;
   variant?: "default" | "error" | "success" | "warning" | "info" | "success";
   preventDuplicate?: boolean;
   anchorOrigin?: {
@@ -48,7 +48,7 @@ export const useNotiStack = () => {
   const showEnqueueSnackbar = ({
     isAction,
     text,
-    functionToExecute,
+    functionToExecute = () => {},
     variant = "default",
     preventDuplicate = false,
     anchorOrigin = {
