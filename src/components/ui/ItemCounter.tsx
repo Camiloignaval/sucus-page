@@ -1,7 +1,7 @@
 import { AddCircleOutline, RemoveCircleOutline } from "@mui/icons-material";
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import { FC } from "react";
-import { enqueueSnackbar, closeSnackbar, SnackbarKey } from "notistack";
+import { useNotiStack } from "../hooks/useNotiStack";
 
 interface Props {
   currentValue: number;
@@ -20,30 +20,8 @@ export const ItemCounter: FC<Props> = ({
   isPossibleZero = false,
   blockButtonPlus = false,
 }) => {
-  const action = (snackbarId: SnackbarKey) => (
-    <Box sx={{ my: 1 }}>
-      <Button
-        sx={{ mr: 1 }}
-        variant="outlined"
-        // color="warning"
-        onClick={() => {
-          removeQuantity();
-          closeSnackbar(snackbarId);
-        }}
-      >
-        Eliminar
-      </Button>
-      <Button
-        variant="outlined"
-        // color="success"
-        onClick={() => {
-          closeSnackbar(snackbarId);
-        }}
-      >
-        Cancelar
-      </Button>
-    </Box>
-  );
+  const { showEnqueueSnackbar } = useNotiStack();
+
   return (
     <Box display="flex" alignItems="center">
       <IconButton
@@ -51,15 +29,13 @@ export const ItemCounter: FC<Props> = ({
         onClick={() => {
           // setQuantity((prev) => prev - 1);
           if (currentValue === 1) {
-            enqueueSnackbar("Item será eliminado del carrito", {
-              // persist: true,
-              action,
+            showEnqueueSnackbar({
+              text: "¿Eliminar producto del carrito?",
+              isAction: true,
+              functionToExecute: () => removeQuantity(),
               variant: "default",
               preventDuplicate: true,
-              anchorOrigin: {
-                vertical: "bottom",
-                horizontal: "right",
-              },
+              anchorOrigin: { vertical: "bottom", horizontal: "right" },
               autoHideDuration: 10000,
             });
           } else {

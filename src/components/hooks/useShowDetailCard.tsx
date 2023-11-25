@@ -14,6 +14,8 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import sucuTriste from "../../assets/sucutriste.png";
 import { useNavigate } from "react-router-dom";
 import { useUiStore } from "../../store/uiStore";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { useNotiStack } from "./useNotiStack";
 
 export const useShowDetailCard = () => {
   const { showDetailCart, openDetailCart, closeDetailCart } = useUiStore();
@@ -23,13 +25,26 @@ export const useShowDetailCard = () => {
   const { items, addToCart, removeOneFromCart, removeAllFromCart } =
     useCartStore();
 
-  const handleClick = () => {
-    openDetailCart();
+  const { showEnqueueSnackbar } = useNotiStack();
+
+  const handleClick = (): void => openDetailCart();
+
+  const handleClose = (): void => closeDetailCart();
+
+  const deleteFromCart = (id: string): void => {
+    showEnqueueSnackbar({
+      text: "¿Eliminar producto del carrito?",
+      isAction: true,
+      functionToExecute: () => removeAllFromCart(id),
+      variant: "default",
+      preventDuplicate: true,
+      anchorOrigin: { vertical: "bottom", horizontal: "right" },
+      autoHideDuration: 10000,
+    });
   };
-  const handleClose = () => closeDetailCart();
 
   const CardDetail = () => (
-    <Card sx={{ position: "absolute", right: 2, minWidth: 300, zIndex: 11 }}>
+    <Card sx={{ position: "absolute", right: 2, minWidth: 330, zIndex: 11 }}>
       <Typography sx={{ marginX: 5, marginY: 2 }}>
         Productos en carrito
       </Typography>
@@ -62,7 +77,7 @@ export const useShowDetailCard = () => {
               justifyContent: "center",
             }}
           >
-            <Grid item xs={4}>
+            <Grid item xs={3.5}>
               <img
                 src={item.image}
                 alt={item.name}
@@ -72,7 +87,7 @@ export const useShowDetailCard = () => {
             <Grid item xs={4}>
               <Typography variant="body2">{item.name}</Typography>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3.5}>
               <ItemCounter
                 currentValue={item.quantity}
                 addQuantity={() =>
@@ -93,6 +108,11 @@ export const useShowDetailCard = () => {
                 // isPossibleZero={item.quantity <= 1}
                 maxValue={item.inStock}
               />
+            </Grid>
+            <Grid item xs={1}>
+              <IconButton onClick={() => deleteFromCart(item.id)}>
+                <DeleteOutlineIcon />
+              </IconButton>
             </Grid>
           </Grid>
         ))}
