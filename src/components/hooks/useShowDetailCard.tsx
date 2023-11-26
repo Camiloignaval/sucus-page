@@ -49,6 +49,7 @@ export const useShowDetailCard = () => {
         Productos en carrito
       </Typography>
       <IconButton
+        aria-label="closeInfoCart"
         onClick={() => handleClose()}
         sx={{ position: "absolute", top: 8, right: 5 }}
       >
@@ -101,9 +102,7 @@ export const useShowDetailCard = () => {
                   })
                 }
                 removeQuantity={() => {
-                  item.quantity > 1
-                    ? removeOneFromCart(item.id)
-                    : removeAllFromCart(item.id);
+                  removeOneFromCart(item.id);
                 }}
                 // isPossibleZero={item.quantity <= 1}
                 maxValue={item.inStock}

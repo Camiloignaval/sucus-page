@@ -79,6 +79,7 @@ export const CardItem = ({ product }: Props) => {
 
         <CardActions sx={{ justifyContent: "end" }}>
           <IconButton
+            aria-label="add_cart_card"
             disabled={
               product.inStock === 0 ||
               items.find((item) => item.id === product.id)?.quantity ===

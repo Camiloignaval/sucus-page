@@ -38,13 +38,15 @@ export const useCartStore = create(
 
       removeOneFromCart: (id) =>
         set((state) => ({
-          items: state.items.map((item) => {
-            if (item.id !== id) return item;
-            return {
-              ...item,
-              quantity: item.quantity - 1,
-            };
-          }),
+          items: state.items
+            .map((item) => {
+              if (item.id !== id) return item;
+              return {
+                ...item,
+                quantity: item.quantity - 1,
+              };
+            })
+            .filter((item) => item.quantity > 0),
         })),
       removeAllFromCart: (id) =>
         set((state) => ({
