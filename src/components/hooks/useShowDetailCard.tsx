@@ -90,7 +90,8 @@ export const useShowDetailCard = () => {
             </Grid>
             <Grid item xs={3.5}>
               <ItemCounter
-                currentValue={item.quantity}
+                // currentValue={item.quantity}
+                prod={item}
                 addQuantity={() =>
                   addToCart({
                     id: item.id,
@@ -109,7 +110,10 @@ export const useShowDetailCard = () => {
               />
             </Grid>
             <Grid item xs={1}>
-              <IconButton onClick={() => deleteFromCart(item.id)}>
+              <IconButton
+                aria-label="deleteProd"
+                onClick={() => deleteFromCart(item.id)}
+              >
                 <DeleteOutlineIcon />
               </IconButton>
             </Grid>

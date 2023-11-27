@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface productCart {
+export interface productCart {
   id: string;
   name: string;
   price: number;
@@ -16,6 +16,7 @@ interface CartState {
   removeOneFromCart: (id: string) => void;
   removeAllFromCart: (id: string) => void;
   getTotalQuantity: () => number;
+  getQuantityById: (id: string) => number;
   clearCart: () => void;
 }
 
@@ -61,6 +62,11 @@ export const useCartStore = create(
         return totalQty;
       },
       clearCart: () => set({ items: [] }),
+      getQuantityById: (id) => {
+        const state = getState();
+        const item = state.items.find((item) => item.id === id);
+        return item?.quantity ?? 0;
+      },
     }),
     {
       name: "cart-storage",

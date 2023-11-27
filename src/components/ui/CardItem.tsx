@@ -14,17 +14,26 @@ interface Props {
   product: Product;
 }
 
-export const CardItem = ({ product }: Props) => {
-  const colorRating =
-    product?.difficulty <= 2
-      ? "green"
-      : product?.difficulty <= 4
-      ? ""
-      : "#6e0000";
+const getColorRating = (difficulty: number) => {
+  if (difficulty <= 2) {
+    return "green";
+  } else if (difficulty <= 4) {
+    return "";
+  } else {
+    return "#6e0000";
+  }
+};
 
+export const CardItem = ({ product }: Props) => {
   const { addToCart, items } = useCartStore();
 
   const { openDetailCart } = useUiStore();
+
+  const formattedPrice = `${product.price.toLocaleString("es-CL", {
+    style: "currency",
+    currency: "CLP",
+  })}`;
+
   return (
     <Box className="itemAos" data-aos="fade-up">
       <Card>
@@ -65,7 +74,7 @@ export const CardItem = ({ product }: Props) => {
                 name="read-only"
                 value={product.difficulty}
                 readOnly
-                sx={{ color: colorRating }}
+                sx={{ color: getColorRating(product.difficulty) }}
               />
             </Grid>
             <Grid item xs={12} display={"flex"} justifyContent={"end"}>
@@ -77,7 +86,8 @@ export const CardItem = ({ product }: Props) => {
         </CardContent>
         <Divider />
 
-        <CardActions sx={{ justifyContent: "end" }}>
+        <CardActions sx={{ justifyContent: "space-between", px: 4 }}>
+          <Typography variant="h6">{formattedPrice}</Typography>
           <IconButton
             aria-label="add_cart_card"
             disabled={

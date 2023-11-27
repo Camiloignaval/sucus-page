@@ -41,7 +41,24 @@ describe("test in CardItem", () => {
     expect(result.current.items.length).toBe(1);
   });
   test("should open cartinfo at add for first time, but second not", async () => {
-    render(<CardItem product={exampleCards[0]} />);
+    render(<CardItem product={{ ...exampleCards[0], difficulty: 5 }} />);
+
+    const button = screen.getByRole("button", { name: /add_cart_card/i });
+    // const { result: resulttCard } = renderHook(() => useCartStore());
+    const { result: resultUi } = renderHook(() => useUiStore());
+    expect(screen.queryByText(/Productos en carrito/i)).toBeNull();
+    await userEvent.click(button);
+    // await waitFor(() => expect(resultUi.current.showDetailCart).toBeTruthy());
+
+    act(() => {
+      resultUi.current.closeDetailCart();
+    });
+    await userEvent.click(button);
+
+    expect(resultUi.current.showDetailCart).toBeFalsy();
+  });
+  test("should open cartinfo at add for first time, but second not  with 4 stars", async () => {
+    render(<CardItem product={{ ...exampleCards[0], difficulty: 4 }} />);
 
     const button = screen.getByRole("button", { name: /add_cart_card/i });
     // const { result: resulttCard } = renderHook(() => useCartStore());

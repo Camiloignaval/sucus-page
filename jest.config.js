@@ -1,5 +1,6 @@
 module.exports = {
   testEnvironment: "jest-environment-jsdom",
+  setupFilesAfterEnv: ["<rootDir>/setupTest.ts"],
   setupFiles: ["./jest.setup.js"],
   transformIgnorePatterns: [],
   // ModuleNameMapper sólo si ocupamos importar CSS en nuestros componentes para el testing

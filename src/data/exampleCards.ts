@@ -7,7 +7,7 @@ export const exampleCards: Product[] = [
     difficulty: 1,
     image:
       "https://www.viverotierranegra.com/wp-content/uploads/2020/08/suculenta-n39.jpg",
-    inStock: 6,
+    inStock: 4,
     price: 100,
     category: "suculentas",
     inOffer: false,
